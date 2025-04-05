@@ -8,16 +8,24 @@ app = Flask(__name__)
 CORS(app)
 
 def download_audio(url):
+    
+
     ydl_opts = {
-        'format': 'bestaudio/best',
-        'outtmpl': '%(title)s.%(ext)s',
-        'quiet': True,
-        'noplaylist': True,
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192',
-        }],
+    'format': 'bestaudio/best',
+    'outtmpl': '%(title)s.%(ext)s',
+    'quiet': True,
+    'noplaylist': True,
+    'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'extractor_args': {
+        'youtube': {
+            'skip': ['authcheck']
+        }
+    },
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': '192',
+    }],
     }
 
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
